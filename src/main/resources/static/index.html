@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaTech | Full Stack Project</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+    <div class="logo">NexaTech</div>
+
+    <div class="nav-right">
+        <a href="#contact">Contact</a>
+        <button id="themeToggle">🌙 Theme</button>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Transform Ideas Into Digital Products</h1>
+
+        <p>
+            A modern full-stack web application built using
+            HTML, CSS, JavaScript, and Spring Boot.
+        </p>
+
+        <a href="#contact" class="btn">
+            Get Started
+        </a>
+    </div>
+</section>
+
+<section class="features">
+
+    <div class="card">
+        <h3>Fast Development</h3>
+        <p>Efficient and scalable software delivery.</p>
+    </div>
+
+    <div class="card">
+        <h3>Secure Systems</h3>
+        <p>Built with reliability and security in mind.</p>
+    </div>
+
+    <div class="card">
+        <h3>Cloud Ready</h3>
+        <p>Prepared for future growth and deployment.</p>
+    </div>
+
+</section>
+
+<section id="contact" class="contact-section">
+
+    <div class="contact-container">
+
+        <h2>Contact Us</h2>
+
+        <form id="contactForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Your Name"
+                required>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Your Email"
+                required>
+
+            <textarea
+                id="message"
+                placeholder="Your Message"
+                required></textarea>
+
+            <button
+                type="submit"
+                id="submitBtn">
+
+                Send Message
+
+            </button>
+
+        </form>
+
+        <p id="responseMessage"></p>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>Created by Diya Wadhwani</p>
+
+    <a href="https://github.com/diyawadhwani13" target="_blank">
+        GitHub
+    </a>
+
+    <a href="https://www.linkedin.com/in/diya-wadhwani-35a7b8315/" target="_blank">
+        LinkedIn
+    </a>
+
+</footer>
+
+<div id="toast">
+    ✅ Message Sent Successfully!
+</div>
+
+<script>
+
+const themeBtn =
+document.getElementById("themeToggle");
+
+themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+});
+
+document
+.getElementById("contactForm")
+.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const name =
+    document.getElementById("name")
+    .value.trim();
+
+    const email =
+    document.getElementById("email")
+    .value.trim();
+
+    const message =
+    document.getElementById("message")
+    .value.trim();
+
+    if(name.length < 3){
+        alert(
+            "Name must be at least 3 characters."
+        );
+        return;
+    }
+
+    if(!email.includes("@")){
+        alert(
+            "Please enter a valid email."
+        );
+        return;
+    }
+
+    if(message.length < 10){
+        alert(
+            "Message must be at least 10 characters."
+        );
+        return;
+    }
+
+    const submitBtn =
+    document.getElementById("submitBtn");
+
+    submitBtn.innerText = "Sending...";
+    submitBtn.disabled = true;
+
+    const data = new URLSearchParams();
+
+    data.append("name",name);
+    data.append("email",email);
+    data.append("message",message);
+
+    const response = await fetch(
+        "/contact",
+        {
+            method:"POST",
+            body:data
+        }
+    );
+
+    const result =
+    await response.text();
+
+    document
+    .getElementById("responseMessage")
+    .innerText = result;
+
+    const toast =
+    document.getElementById("toast");
+
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    },3000);
+
+    submitBtn.innerText =
+    "Send Message";
+
+    submitBtn.disabled = false;
+
+    this.reset();
+
+});
+
+</script>
+
+</body>
+</html>
