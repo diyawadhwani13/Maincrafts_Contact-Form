@@ -1,4 +1,3 @@
-# Maincrafts_Contact Form
 # 📬 Maincrafts Contact Form
 
 A full-stack Contact Form application built using Spring Boot, HTML, CSS, and JavaScript.  
